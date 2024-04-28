@@ -14,7 +14,7 @@ This Wordle game is a simple word-guessing game where the player tries to guess 
 
 ## Dependencies
 
-- C++ compiler with C++11 support.
+- C++ compiler
 - `words.txt` file containing a list of words to choose from.
 - Windows operating system (due to the use of `Windows.h` for console color support).
 
@@ -27,7 +27,7 @@ This Wordle game is a simple word-guessing game where the player tries to guess 
    
 3. Ensure that the words.txt file is present in the same directory as the compiled executable.
 4. Run the compiled executable `./wordle`
-5. follow the on-screen instructions to play the Wordle game.
+5. Follow the on-screen instructions to play the Wordle game.
 
 # Customization
 - You can adjust the WORD_LENGTH constant in the wordle.cpp file to change the length of the target word.
