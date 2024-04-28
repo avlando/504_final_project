@@ -5,11 +5,7 @@ ALL: wordle
 SOURCES := $(wildcard *.cpp)
 HEADERS := $(wildcard *.h)
 
-# Create a list of object files by replacing .cpp with .o
 OBJECTS := $(SOURCES:.cpp=.o)
 
-# A recipe for making an object file from a .cpp file
-# Note: This makes every header file a dependency of every object file,
-# which is not ideal, but it is safe.
 %.o : %.cpp ${HEADERS}
 	g++ -c $
