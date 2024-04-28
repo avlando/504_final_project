@@ -20,6 +20,7 @@ This Wordle game is a simple word-guessing game where the player tries to guess 
 
 ## Usage
 
+
 1. Compile the `wordle.cpp` file using a C++ compiler.
    ```bash
    g++ wordle.cpp -o wordle
