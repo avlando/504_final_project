@@ -29,6 +29,16 @@ This Wordle game is a simple word-guessing game where the player tries to guess 
 4. Run the compiled executable `./wordle`
 5. Follow the on-screen instructions to play the Wordle game.
 
+## Testing
+
+1. Compile the `wordle.cpp` file using a C++ compiler.
+
+   ```bash
+   g++ wordle.cpp test.cpp -o test
+
+2. Ensure that you are in the output directory
+3. Run the compiled executable `.\'test.exe'`
+
 # Customization
 - You can adjust the WORD_LENGTH constant in the wordle.cpp file to change the length of the target word.
 - Modify the numberOfTries constant in the main function to change the number of attempts allowed for the player.
