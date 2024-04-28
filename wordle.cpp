@@ -19,7 +19,7 @@
  * - The program prints the wordle board, the user's attempts, and the target
  *   word if the user finds the correct word.
  */
-
+#include "wordle.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
