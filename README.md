@@ -20,11 +20,11 @@ This Wordle game is a simple word-guessing game where the player tries to guess 
 
 ## Usage
 
-
 1. Compile the `wordle.cpp` file using a C++ compiler.
    ```bash
+   
    g++ wordle.cpp -o wordle
-
+   
 2. Ensure that the words.txt file is present in the same directory as the compiled executable.
 3. Run the compiled executable `./wordle`
 4. follow the on-screen instructions to play the Wordle game.
