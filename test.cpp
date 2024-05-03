@@ -14,7 +14,7 @@
  *
  * @throws None
  */
-void toUpperCase(std::string &input)
+void capitalize(std::string &input)
 {
     std::transform(input.begin(), input.end(), input.begin(), []
                    (unsigned char c) { return std::toupper(c); });
@@ -33,7 +33,7 @@ void toUpperCase(std::string &input)
  *
  * @throws None.
  */
-bool isValid(std::string word) 
+bool valid_word(std::string word) 
 {
     // Check if the length of the word is 5 characters
     if (word.length() != 5) {
@@ -52,10 +52,10 @@ bool isValid(std::string word)
  * @brief Fills a 2D vector of integers representing the matches between a target word and a guess.
  *
  * This function takes in a reference to a 2D vector of integers representing the matches, the index of the try,
- * the target word, and the guess word. It initializes all the values in the 2D vector to NOT_MATCH.
+ * the target word, and the guess word. It initializes all the values in the 2D vector to no_match.
  * For each character in the guess, it checks if it is present in the target word.
- * If it is, and it is in the same position, it sets the value in the 2D vector to MATCH. If it is present, but
- * not in the same position, it sets the value to PARTIAL_MATCH.
+ * If it is, and it is in the same position, it sets the value in the 2D vector to match. If it is present, but
+ * not in the same position, it sets the value to part_match.
  *
  * @param[out] matches A reference to a 2D vector of integers representing the matches.
  * @param tryIndex An integer representing the index of the try.
@@ -64,9 +64,9 @@ bool isValid(std::string word)
  *
  * @throws None.
  */
-void markMatch(std::vector<std::vector<int>> &matches, int tryIndex, std::string target, std::string guess)
+void mark_match(std::vector<std::vector<int>> &matches, int tryIndex, std::string target, std::string guess)
 {
-    // Initialize all values in the 2D vector to NOT_MATCH
+    // Initialize all values in the 2D vector to no_match
     for (int i = 0; i < guess.length(); i++)
     {
         matches[tryIndex][i] = 0;
@@ -107,7 +107,7 @@ void markMatch(std::vector<std::vector<int>> &matches, int tryIndex, std::string
  *
  * @throws None.
  */
-bool isAllMatch(std::string target, std::string guess)
+bool is_all_match(std::string target, std::string guess)
 {
     // Check if each character in the guess word matches its corresponding character in the target word
     for (int i = 0; i < guess.length(); i++)
@@ -124,51 +124,51 @@ int main() {
     // Test if the function correctly converts a lowercase string to uppercase
     {
         std::string input = "hello";
-        toUpperCase(input);
+        capitalize(input);
         assert(input == "HELLO");
     }
 
     // Test if the function correctly handles strings with mixed cases
     {
         std::string input = "HeLLo";
-        toUpperCase(input);
+        capitalize(input);
         assert(input == "HELLO");
     }
 
     // Test if the function correctly validates a 5-letter uppercase word
     {
         std::string word = "ABCDE";
-        assert(isValid(word) == true);
+        assert(valid_word(word) == true);
     }
 
     // Test if the function correctly rejects words with invalid length or characters
     {
         std::string word = "ABCDEF"; // 6 characters
-        assert(isValid(word) == false);
+        assert(valid_word(word) == false);
         
         word = "ABCD1"; // Contains a non-alphabetic character
-        assert(isValid(word) == false);
+        assert(valid_word(word) == false);
 
         word = "AB"; // Too short
-        assert(isValid(word) == false);
+        assert(valid_word(word) == false);
     }
 
-    // Test markMatch function
+    // Test mark_match function
     {
         std::vector<std::vector<int>> matches(1, std::vector<int>(5, 0));
-        markMatch(matches, 0, "ABCDE", "AXYBZ");
+        mark_match(matches, 0, "ABCDE", "AXYBZ");
         // Expectation: A (match), X (not found), Y (not found), B (match), Z (not found)
         std::vector<int> expected = {2, 0, 0, 1, 0};
         assert(matches[0] == expected);
     }
 
-    // Test isAllMatch function
+    // Test is_all_match function
     {
-        std::string targetWord = "ABCDE";
-        assert(isAllMatch(targetWord, "ABCDE") == true); // All match
-        assert(isAllMatch(targetWord, "ABCDD") == false); // Last character does not match
-        assert(isAllMatch(targetWord, "AXYBZ") == false); // Partial match
-        assert(isAllMatch(targetWord, "AXYZZ") == false); // Partial match and last character does not match
+        std::string target_word = "ABCDE";
+        assert(is_all_match(target_word, "ABCDE") == true); // All match
+        assert(is_all_match(target_word, "ABCDD") == false); // Last character does not match
+        assert(is_all_match(target_word, "AXYBZ") == false); // Partial match
+        assert(is_all_match(target_word, "AXYZZ") == false); // Partial match and last character does not match
     }
 
     std::cout << "All tests passed successfully!" << std::endl;

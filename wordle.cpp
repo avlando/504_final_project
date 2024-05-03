@@ -10,7 +10,7 @@
  * or runs out of attempts.
  *
  * @author Alex Landry
- * @date 2023-04-25
+ * @date 2023-05-02
  *
  * @par Inputs:
  * - The user enters a word to guess.
@@ -29,10 +29,10 @@
 #include <ctime>   // For time()
 #include <Windows.h>
 
-const int WORD_LENGTH = 5; ///< The length of a word.
-const int NOT_MATCH = 0;    ///< No match.
-const int PARTIAL_MATCH = 1; ///< Partial match.
-const int MATCH = 2;         ///< Full match.
+const int length_word = 5; ///< The length of a word.
+const int no_match = 0;    ///< No match.
+const int part_match = 1; ///< Partial match.
+const int match = 2;         ///< Full match.
 
 /**
  * @brief Converts a given string to uppercase.
@@ -44,7 +44,7 @@ const int MATCH = 2;         ///< Full match.
  *
  * @throws None
  */
-void toUpperCase(std::string &input)
+void capitalize(std::string &input)
 {
     std::transform(input.begin(), input.end(), input.begin(), []
                    (unsigned char c) { return std::toupper(c); });
@@ -63,7 +63,7 @@ void toUpperCase(std::string &input)
  *
  * @throws None
  */
-std::string getRandomWord() {
+std::string get_random_word() {
     std::ifstream file("words.txt");
     std::vector<std::string> words;
     std::string word;
@@ -100,10 +100,10 @@ std::string getRandomWord() {
  *
  * @throws None.
  */
-bool isValid(std::string word) 
+bool valid_word(std::string word) 
 {
     // Check if the length of the word is 5 characters
-    if (word.length() != WORD_LENGTH) {
+    if (word.length() != length_word) {
         return false;
     }
 
@@ -119,10 +119,10 @@ bool isValid(std::string word)
  * @brief Fills a 2D vector of integers representing the matches between a target word and a guess.
  *
  * This function takes in a reference to a 2D vector of integers representing the matches, the index of the try,
- * the target word, and the guess word. It initializes all the values in the 2D vector to NOT_MATCH.
+ * the target word, and the guess word. It initializes all the values in the 2D vector to no_match.
  * For each character in the guess, it checks if it is present in the target word.
- * If it is, and it is in the same position, it sets the value in the 2D vector to MATCH. If it is present, but
- * not in the same position, it sets the value to PARTIAL_MATCH. The inputs are a reference to a 2D vector of integers
+ * If it is, and it is in the same position, it sets the value in the 2D vector to match. If it is present, but
+ * not in the same position, it sets the value to part_match. The inputs are a reference to a 2D vector of integers
  * representing the matches, an integer representing the index of the try, a string representing the target word,
  * and a string representing the guess word. The outputs are none, but the input 2D vector is modified.
  *
@@ -135,10 +135,10 @@ bool isValid(std::string word)
  * @brief Fills a 2D vector of integers representing the matches between a target word and a guess.
  *
  * This function takes in a reference to a 2D vector of integers representing the matches, the index of the try,
- * the target word, and the guess word. It initializes all the values in the 2D vector to NOT_MATCH.
+ * the target word, and the guess word. It initializes all the values in the 2D vector to no_match.
  * For each character in the guess, it checks if it is present in the target word.
- * If it is, and it is in the same position, it sets the value in the 2D vector to MATCH. If it is present, but
- * not in the same position, it sets the value to PARTIAL_MATCH.
+ * If it is, and it is in the same position, it sets the value in the 2D vector to match. If it is present, but
+ * not in the same position, it sets the value to part_match.
  *
  * @param[out] matches A reference to a 2D vector of integers representing the matches.
  * @param tryIndex An integer representing the index of the try.
@@ -147,12 +147,12 @@ bool isValid(std::string word)
  *
  * @throws None.
  */
-void markMatch(std::vector<std::vector<int>> &matches, int tryIndex, std::string target, std::string guess)
+void mark_match(std::vector<std::vector<int>> &matches, int tryIndex, std::string target, std::string guess)
 {
-    // Initialize all values in the 2D vector to NOT_MATCH
+    // Initialize all values in the 2D vector to no_match
     for (int i = 0; i < guess.length(); i++)
     {
-        matches[tryIndex][i] = NOT_MATCH;
+        matches[tryIndex][i] = no_match;
     }
     // For each character in the guess, check if it is present in the target word
     for (int j = 0; j < guess.length(); j++)
@@ -164,12 +164,12 @@ void markMatch(std::vector<std::vector<int>> &matches, int tryIndex, std::string
             {
                 if (i == j)
                 {
-                    matches[tryIndex][j] = MATCH;
+                    matches[tryIndex][j] = match;
                     break;
                 }
                 else
                 {
-                    matches[tryIndex][j] = PARTIAL_MATCH;
+                    matches[tryIndex][j] = part_match;
                 }
             }
         }
@@ -190,7 +190,7 @@ void markMatch(std::vector<std::vector<int>> &matches, int tryIndex, std::string
  *
  * @throws None.
  */
-bool isAllMatch(std::string target, std::string guess)
+bool all_match(std::string target, std::string guess)
 {
     // Check if each character in the guess word matches its corresponding character in the target word
     for (int i = 0; i < guess.length(); i++)
@@ -212,14 +212,14 @@ bool isAllMatch(std::string target, std::string guess)
  *
  * @param tries A vector of strings representing the tries in the game.
  * @param matches A 2D vector of integers representing the matches between each try and each character.
- * @param currentTry An integer representing the index of the current try.
+ * @param current_try An integer representing the index of the current try.
  *
  * @throws None.
  */
-void printWordle(std::vector<std::string> tries, std::vector<std::vector<int>> matches, int currentTry)
+void print_wordle(std::vector<std::string> tries, std::vector<std::vector<int>> matches, int current_try)
 {
     // Iterate over each try in the tries vector
-    for (int i = 0; i <= currentTry && i < tries.size(); i++)
+    for (int i = 0; i <= current_try && i < tries.size(); i++)
     {
         // Generate the separator line for the board
         std::string separator = "-";
@@ -237,16 +237,16 @@ void printWordle(std::vector<std::string> tries, std::vector<std::vector<int>> m
             // Add the current character to the text line, with color if necessary
             char value = std::toupper(tries[i][j]);
             text += "  ";
-            if (matches[i][j] == PARTIAL_MATCH)
+            if (matches[i][j] == part_match)
             {
                 text += "\033[33m";
             }
-            else if (matches[i][j] == MATCH)
+            else if (matches[i][j] == match)
             {
                 text += "\033[32m";
             }
             text += value;
-            if (matches[i][j] == PARTIAL_MATCH || matches[i][j] == MATCH)
+            if (matches[i][j] == part_match || matches[i][j] == match)
             {
                 text += "\033[0m";
             }
@@ -275,7 +275,7 @@ void printWordle(std::vector<std::string> tries, std::vector<std::vector<int>> m
  * It initializes the tries vector and matches vector, seeds the random number generator,
  * gets a random word, and enters a loop to get user input and check if the word is found.
  *
- * @param numberOfTries The number of tries the user has to guess the word.
+ * @param number_of_tries The number of tries the user has to guess the word.
  *
  * @return 0 if the program runs successfully.
  *
@@ -283,39 +283,39 @@ void printWordle(std::vector<std::string> tries, std::vector<std::vector<int>> m
  */
 int main() {
     // Set the number of tries
-    const int numberOfTries = 6;
+    const int number_of_tries = 6;
 
     // Vector to store the tries
-    std::vector<std::string> tries(numberOfTries);
+    std::vector<std::string> tries(number_of_tries);
 
     // 2D vector to store the matches between a target word and a guess
-    std::vector<std::vector<int>> matches(numberOfTries, std::vector<int>(WORD_LENGTH));
+    std::vector<std::vector<int>> matches(number_of_tries, std::vector<int>(length_word));
 
     // Seed the random number generator
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     // Get a random word
-    std::string targetWord = getRandomWord();
+    std::string target_word = get_random_word();
 
     // To upper case
-    toUpperCase(targetWord);
+    capitalize(target_word);
 
     // Input string
     std::string input;
 
     // Current try index
-    int currentTry = 0;
+    int current_try = 0;
 
     // Loop to get user input and check if the word is found
-    while (currentTry < numberOfTries) {
+    while (current_try < number_of_tries) {
         do {
             // Prompt the user to enter a guess or Q to quit
-            std::cout << "Please enter your guess (word length must be " + std::to_string(WORD_LENGTH) + ") or type Q to quit: ";
+            std::cout << "Please enter your guess (word length must be " + std::to_string(length_word) + ") or type Q to quit: ";
             std::getline(std::cin, input);
 
             // To upper case
-            toUpperCase(input);
-        } while (input != "Q" && !isValid(input));
+            capitalize(input);
+        } while (input != "Q" && !valid_word(input));
 
         // Exit the loop if the user quits
         if (input == "Q") {
@@ -324,27 +324,27 @@ int main() {
         }
 
         // Store the input in the tries vector
-        tries[currentTry] = input;
+        tries[current_try] = input;
 
         // Fill a 2D vector of integers representing the matches between a target word and a guess
-        markMatch(matches, currentTry, targetWord, input);
+        mark_match(matches, current_try, target_word, input);
 
         // Print the tries and matches
-        printWordle(tries, matches, currentTry);
+        print_wordle(tries, matches, current_try);
 
         // Exit the loop if the word is found
-        if (isAllMatch(targetWord, input)) {
-            std::cout << "Found the word" << std::endl;
+        if (all_match(target_word, input)) {
+            std::cout << "You found the word!" << std::endl;
             break;
         }
         // Exit the loop if the number of tries is reached
-        else if (currentTry == numberOfTries - 1) {
+        else if (current_try == number_of_tries - 1) {
             std::cout << "You didn't find the word" << std::endl;
-            std::cout << "The word was: " << targetWord << std::endl;
+            std::cout << "The word was: " << target_word << std::endl;
         }
 
         // Increment the current try index
-        currentTry++;
+        current_try++;
     }
 
     // Return 0 if the program runs successfully
