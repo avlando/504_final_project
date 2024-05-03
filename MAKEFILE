@@ -1,11 +1,19 @@
-# Define the default target
-ALL: wordle
+# By default, make will try to build the first target it encounters.
+# Here we make up a dummy name "ALL" (note: this is not a special make
+# name, it is just commonly used).
 
-# Find all source files and header files
-SOURCES := $(wildcard *.cpp)
-HEADERS := $(wildcard *.h)
+ALL: testing
 
-OBJECTS := $(SOURCES:.cpp=.o)
+# Rule for linking together the executable
+tests/Tests.exe: include/wordle.h
+	g++ -o output/test.exe test.cpp
 
-%.o : %.cpp ${HEADERS}
-	g++ -c $
+# Target for running tests
+testing: tests/Tests.exe
+	$(shell ./output/test.exe > out)
+	@if [ $${.SHELLSTATUS} = 0 ]; then echo "All tests passed"; exit 0; else cat out; exit 1; fi
+
+# Cleanup target to remove generated files
+clean:
+	rm -f output/test.exe out
+

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Wordle game is a simple word-guessing game where the player tries to guess a target word within a limited number of attempts. The game provides feedback on each guess, indicating whether the guessed word contains correct letters in the correct positions, correct letters in incorrect positions, or incorrect letters.
+This is my final project for PHY 504 Computation in Physics and Astrophysics for Spring 2024. This Wordle game is a simple word-guessing game where the player tries to guess a target word within a limited number of attempts. The game provides feedback on each guess, indicating whether the guessed word contains correct letters in the correct positions, correct letters in incorrect positions, or incorrect letters.
 
 ## Features
 
@@ -16,7 +16,7 @@ This Wordle game is a simple word-guessing game where the player tries to guess 
 
 - C++ compiler
 - `words.txt` file containing a list of words to choose from.
-- Windows operating system (due to the use of `Windows.h` for console color support).
+- Windows operating system (due to the use of `Windows.h` for console color matching support).
 
 ## Usage
 
@@ -31,18 +31,20 @@ This Wordle game is a simple word-guessing game where the player tries to guess 
 
 ## Testing
 
-1. Compile the `wordle.cpp` file using a C++ compiler.
+1. Compile the `wordle.cpp` and `test.cpp` files using a C++ compiler.
 
    ```bash
    g++ wordle.cpp test.cpp -o test
 
 2. Ensure that you are in the output directory
 3. Run the compiled executable `.\'test.exe'`
+4. If terminal prints "All tests passed successfully!", then all tests completely passes
 
 # Customization
-- You can adjust the WORD_LENGTH constant in the wordle.cpp file to change the length of the target word.
-- Modify the numberOfTries constant in the main function to change the number of attempts allowed for the player.
+- You can adjust the `length_word` constant in the wordle.cpp file to change the length of the target word.
+Note: Changing the `length_word` constant means that `word.txt` needs to be updated to include the appropriate words with given length 
+- Modify the `number_of_tries` constant in the main function to change the number of attempts allowed for the player.
 
 Credits
 Author: Alex Landry
-Date: April 27, 2023
+Date: May 2nd, 2024
